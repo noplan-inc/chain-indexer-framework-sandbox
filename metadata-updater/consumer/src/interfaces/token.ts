@@ -4,4 +4,5 @@
 */
 export interface IToken {
     tokenId: number,
+    txHash: string,
 }

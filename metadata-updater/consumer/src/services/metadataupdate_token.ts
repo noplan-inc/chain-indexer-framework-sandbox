@@ -17,8 +17,8 @@ export default class MetadataUpdateTokenService {
      */
     public async save(data: IToken[]): Promise<boolean> {
         Logger.debug({
-            location: "transfer_token_service",
-            function: "saveTokenTransfers",
+            location: "metadataupdate_token_service",
+            function: "saveMetadataUpdateToken",
             status: "function call",
             data: {
                 length: data.length
@@ -27,13 +27,15 @@ export default class MetadataUpdateTokenService {
 
 
         if (data && data.length) {
+            Logger.info("data")
+            Logger.info(data)
             //@ts-ignore
             await this.metadataUpdateModel.updateTokens(data);
         }
 
         Logger.debug({
-            location: "transfer_token_service",
-            function: "saveTokenTransfers",
+            location: "metadataupdate_token_service",
+            function: "saveMetadataUpdateToken",
             status: "function completed"
         });
 

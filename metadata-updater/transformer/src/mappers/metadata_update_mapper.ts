@@ -7,6 +7,7 @@ import { ethers } from "ethers";
 
 import dotenv from 'dotenv';
 import { Logger } from "@maticnetwork/chain-indexer-framework";
+import utils from "web3-utils";
 
 dotenv.config();
 
@@ -30,18 +31,17 @@ export class MetadataUpdateMapper implements IMapper<ITransaction, IMetadataUpda
 
         for (const log of transaction.receipt.logs) {
             if (
-                log.topics.length && log.topics.length >= 1 &&
+                log.topics.length && log.topics.length == 1 &&
                 // Check if event was emitted by NFT Contract
-                log.address.toLowerCase() === (process.env.NFT_CONTRACT as string).toLowerCase()
+                log.address.toLowerCase() === (process.env.NFT_CONTRACT as string).toLowerCase() &&
+                log.topics[0] === utils.keccak256("MetadataUpdate(uint256)")
             ) {
-                Logger.info("log.topics.join isssss")
-                Logger.info(log.topics)
                 metadataUpdates.push({
                     transactionIndex: transaction.receipt.transactionIndex,
                     transactionHash: transaction.hash.toLowerCase(),
                     transactionInitiator: transaction.from.toLowerCase(),
                     nftAddress: log.address.toLowerCase(),
-                    tokenId: parseInt(ABICoder.decodeParameter("uint256", log.topics[0])),
+                    tokenId: utils.toBN(log.data).toNumber(),
                 })
             }
         }

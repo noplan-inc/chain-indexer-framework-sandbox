@@ -7,18 +7,10 @@ import { IToken } from "./token.js";
  */
 const statics = {
 
-    /**
-     * Inserts multiple documents for NFT ownership into token collection 
-     * 
-     * @param {IToken[]} data 
-     * @param {ClientSession} session 
-     * 
-     * @returns {Promise<void>}
-     */
     async updateTokens(data: IToken[]): Promise<void> {
         for (let metadataupdate of data) {
             //@ts-ignore
-            await this.updateOne({ tokenId: metadataupdate.tokenId }, { upsert: true });
+            await this.updateOne({ tokenId: metadataupdate.tokenId }, { txHash: metadataupdate.txHash }, { upsert: true });
         }
         return;
     }

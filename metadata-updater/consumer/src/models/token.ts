@@ -7,6 +7,9 @@ const TokenSchema = new Schema<IToken>({
     tokenId: {
         type: Number,
     },
+    txHash: {
+        type: String
+    }
 },
     {
         versionKey: false,

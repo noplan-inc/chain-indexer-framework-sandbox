@@ -13,10 +13,10 @@ export default class MetadataUpdateTokenMapper {
     
     public map(transformedBlock: ITransformedBlock<INFTMetadataUpdateTx>): IToken[] {
         let tokens: IToken[] = [];
-
         for (const metadataupdate of transformedBlock.data) {
             tokens.push({
-                tokenId: metadataupdate.tokenId
+                tokenId: metadataupdate.tokenId,
+                txHash: metadataupdate.transactionHash,
             });
         }
 

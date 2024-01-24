@@ -13,7 +13,7 @@ import path from "path";
 dotenv.config()
 
 
-export default async function startConsuming(updateMetadataTokenService: UpdateMetadataTokenService, transferTokenMapper: MetadataUpdateTokenMapper): Promise<void> {
+export default async function startConsuming(updateMetadataTokenService: UpdateMetadataTokenService, metadataUpdateTokenMapper: MetadataUpdateTokenMapper): Promise<void> {
     try {
         consume({
             "metadata.broker.list": process.env.KAFKA_CONNECTION_URL || "localhost:9092",
@@ -31,10 +31,9 @@ export default async function startConsuming(updateMetadataTokenService: UpdateM
             next: async (message: DeserialisedMessage) => {
                 const transformedBlock = message.value as ITransformedBlock<INFTMetadataUpdateTx>;
                 const metadataupdates: INFTMetadataUpdateTx[] = transformedBlock.data as INFTMetadataUpdateTx[];
-
                 if (metadataupdates && metadataupdates.length > 0) {
                     await updateMetadataTokenService.save(
-                        transferTokenMapper.map(transformedBlock)
+                        metadataUpdateTokenMapper.map(transformedBlock)
                     );
                 }
             },

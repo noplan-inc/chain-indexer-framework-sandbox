@@ -26,11 +26,11 @@ async function start(): Promise<void> {
         const database = new Database(process.env.MONGO_URL || 'mongodb://localhost:27017/chain-indexer');
         await database.connect();
 
-        const transferService = new MetadataUpdateTokenService(
+        const metadataUpdateTokenService = new MetadataUpdateTokenService(
             await TokenModel.new(database),
         );
 
-        await startConsuming(transferService, new MetadataUpdateTokenMapper());
+        await startConsuming(metadataUpdateTokenService, new MetadataUpdateTokenMapper());
 
     } catch (error) {
         Logger.error(`Error when starting consumer service: ${(error as Error).message}`);
