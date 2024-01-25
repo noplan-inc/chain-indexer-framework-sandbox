@@ -34,5 +34,5 @@ services:
       - broker
     restart: always
     environment:
-      KAFKA_CLUSTERS_0_NAME: nft-indexer
+      KAFKA_CLUSTERS_0_NAME: erc20-indexer
       KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS: broker:29092

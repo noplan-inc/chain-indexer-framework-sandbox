@@ -3,7 +3,6 @@ import { IMapper } from "@maticnetwork/chain-indexer-framework/interfaces/mapper
 import { ABICoder } from "@maticnetwork/chain-indexer-framework/coder/abi_coder";
 import { BloomFilter } from "@maticnetwork/chain-indexer-framework/filter";
 import IMetadataUpdateTx from "../interfaces/metadata_update_tx.js";
-import { ethers } from "ethers";
 
 import dotenv from 'dotenv';
 import { Logger } from "@maticnetwork/chain-indexer-framework";
@@ -11,7 +10,7 @@ import utils from "web3-utils";
 
 dotenv.config();
 
-const metadataUpdateHash = ethers.keccak256(ethers.toUtf8Bytes("MetadataUpdate(uint256)"));
+const metadataUpdateHash = utils.keccak256("MetadataUpdate(uint256)");
 
 export class MetadataUpdateMapper implements IMapper<ITransaction, IMetadataUpdateTx> {
     map(transaction: ITransaction): IMetadataUpdateTx[] {

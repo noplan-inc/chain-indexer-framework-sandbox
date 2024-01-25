@@ -1,0 +1,18 @@
+package tokenapprovalpackage;
+syntax = "proto3";
+
+message TokenApprovalBlock {
+    message TokenApprovalEvent {
+        required uint64 transactionIndex = 1;
+        required string transactionHash = 2;
+        required string transactionInitiator = 3;
+        required string tokenAddress = 4;
+        required string ownerAddress = 5;
+        required string spenderAddress = 6;
+        required uint64 amount = 7;
+    }
+
+    required uint64 blockNumber = 1;
+    required uint64 timestamp = 2;
+    repeated TokenApprovalEvent data = 3;
+}
